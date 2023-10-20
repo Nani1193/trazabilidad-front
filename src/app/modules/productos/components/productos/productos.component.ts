@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { ProductosService } from 'src/app/modules/shared/services/productos.service';
+import { NewProductosComponent } from '../new-productos/new-productos.component';
 
 @Component({
   selector: 'app-productos',
@@ -45,6 +46,28 @@ export class ProductosComponent implements OnInit {
   processProductoResponse(data: any[]){
     this.dataSource = new MatTableDataSource<ProductosElement>(data);
     this.dataSource.paginator = this.paginator;
+  }
+
+  openProductosDialog(){
+    const dialogRef = this.dialog.open(NewProductosComponent , {
+      width: '450px'
+    });
+
+    dialogRef.afterClosed().subscribe((result:any) => {
+
+      if( result == 1){
+        this.openSnackBar("Productos agregados", "Exitosamente");
+        this.obtenerProductos();
+      } else if (result == 2) {
+        this.openSnackBar("Se produjo un error al guardar el producto", "Error");
+      }
+    });
+  }
+
+  openSnackBar(message: string, action: string) : MatSnackBarRef<SimpleSnackBar>{
+    return this.snackBar.open(message, action, {
+      duration: 2000
+    })
   }
 
 }

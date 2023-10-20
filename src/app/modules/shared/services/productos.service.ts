@@ -21,4 +21,9 @@ export class ProductosService {
     const endpoint = `${base_url}`;
     return this.http.get(`${endpoint}`);
   }
+
+  public saveProducto (data:any): Observable<any>{
+    const endpoint = `${base_url}`;
+    return this.http.post(`${endpoint}/CrearCProducto`, data);
+  }
 }

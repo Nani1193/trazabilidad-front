@@ -9,8 +9,6 @@ import { ClienteService } from 'src/app/modules/shared/services/cliente.service'
   styleUrls: ['./new-cliente.component.css']
 })
 export class NewClienteComponent implements OnInit {
-  cliente: any;
-
   public clienteForm: FormGroup;
   estadoFormulario: string = "";
   panelOpenState = false;
