@@ -38,12 +38,11 @@ export class ClienteComponent implements OnInit {
   crearCliente(): void {
     this.clienteService.crearCliente(this.nuevoCliente).subscribe((cliente) => {
       this.clientes.push(cliente); // Agregar el nuevo cliente a la lista
-      this.nuevoCliente = { nombre: '', direccion: '', contacto: '', informacionAdicional: '' }; // Limpiar el formulario
     });
   }
 
-  processClienteResponse(dataEmpleado: any[]){
-    this.dataSource = new MatTableDataSource<ClienteElement>(dataEmpleado);
+  processClienteResponse(data: any[]){
+    this.dataSource = new MatTableDataSource<ClienteElement>(data);
     this.dataSource.paginator = this.paginator;
   }
 

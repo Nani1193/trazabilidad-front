@@ -29,7 +29,7 @@ export class ProductosComponent implements OnInit {
 
   obtenerProductos(): void {
     this.productosService.obtenerProductos().subscribe((clientes:any) => {
-      this.processClienteResponse(clientes);
+      this.processProductoResponse(clientes);
     }, (error: any) => {
         console.log("error: ", error);
     })
@@ -37,13 +37,12 @@ export class ProductosComponent implements OnInit {
 
   crearProducto(): void {
     this.productosService.crearProducto(this.nuevoProducto).subscribe((productos) => {
-      this.producto.push(productos); // Agregar el nuevo cliente a la lista
-      this.nuevoProducto = { nombre: '', direccion: '', contacto: '', informacionAdicional: '' }; // Limpiar el formulario
+      this.producto.push(productos);
     });
   }
 
-  processClienteResponse(dataEmpleado: any[]){
-    this.dataSource = new MatTableDataSource<ProductosElement>(dataEmpleado);
+  processProductoResponse(data: any[]){
+    this.dataSource = new MatTableDataSource<ProductosElement>(data);
     this.dataSource.paginator = this.paginator;
   }
 

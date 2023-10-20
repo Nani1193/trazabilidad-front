@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 import { ClienteModule } from '../cliente/cliente.module';
 import { ProductosModule } from '../productos/productos.module';
+import { PedidosModule } from '../pedidos/pedidos.module';
 
 
 
@@ -19,7 +20,9 @@ import { ProductosModule } from '../productos/productos.module';
     RouterModule,
     SharedModule,
     ClienteModule,
-    ProductosModule
+    ProductosModule,
+    PedidosModule
+
   ]
 })
 export class DashboardModule { }
