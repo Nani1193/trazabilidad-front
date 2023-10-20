@@ -5,6 +5,7 @@ import { HomeComponent } from './components/home/home.component';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 import { ClienteModule } from '../cliente/cliente.module';
+import { ProductosModule } from '../productos/productos.module';
 
 
 
@@ -17,7 +18,8 @@ import { ClienteModule } from '../cliente/cliente.module';
     CommonModule,
     RouterModule,
     SharedModule,
-    ClienteModule
+    ClienteModule,
+    ProductosModule
   ]
 })
 export class DashboardModule { }
