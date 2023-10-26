@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { ProductosService } from 'src/app/modules/shared/services/productos.service';
+import { NewProductosComponent } from '../new-productos/new-productos.component';
 
 @Component({
   selector: 'app-productos',
@@ -14,8 +15,9 @@ export class ProductosComponent implements OnInit {
   producto: any;
   nuevoProducto: any;
 
-  constructor(private productosService: ProductosService,
-    public dialog: MatDialog, private snackBar: MatSnackBar) {}
+    private productosService = inject(ProductosService);
+    public dialog = inject(MatDialog);
+    private snackBar = inject(MatSnackBar);
 
   ngOnInit(): void {
     this.obtenerProductos();
@@ -28,8 +30,8 @@ export class ProductosComponent implements OnInit {
   paginator!: MatPaginator;
 
   obtenerProductos(): void {
-    this.productosService.obtenerProductos().subscribe((clientes:any) => {
-      this.processClienteResponse(clientes);
+    this.productosService.obtenerProductos().subscribe((productos:any) => {
+      this.processProductoResponse(productos);
     }, (error: any) => {
         console.log("error: ", error);
     })
@@ -37,14 +39,35 @@ export class ProductosComponent implements OnInit {
 
   crearProducto(): void {
     this.productosService.crearProducto(this.nuevoProducto).subscribe((productos) => {
-      this.producto.push(productos); // Agregar el nuevo cliente a la lista
-      this.nuevoProducto = { nombre: '', direccion: '', contacto: '', informacionAdicional: '' }; // Limpiar el formulario
+      this.producto.push(productos);
     });
   }
 
-  processClienteResponse(dataEmpleado: any[]){
-    this.dataSource = new MatTableDataSource<ProductosElement>(dataEmpleado);
+  processProductoResponse(data: any[]){
+    this.dataSource = new MatTableDataSource<ProductosElement>(data);
     this.dataSource.paginator = this.paginator;
+  }
+
+  openProductosDialog(){
+    const dialogRef = this.dialog.open(NewProductosComponent , {
+      width: '450px'
+    });
+
+    dialogRef.afterClosed().subscribe((result:any) => {
+
+      if( result == 1){
+        this.openSnackBar("Productos agregados", "Exitosamente");
+        this.obtenerProductos();
+      } else if (result == 2) {
+        this.openSnackBar("Se produjo un error al guardar el producto", "Error");
+      }
+    });
+  }
+
+  openSnackBar(message: string, action: string) : MatSnackBarRef<SimpleSnackBar>{
+    return this.snackBar.open(message, action, {
+      duration: 2000
+    })
   }
 
 }

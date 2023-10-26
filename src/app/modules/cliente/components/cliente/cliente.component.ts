@@ -1,9 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { ClienteService } from 'src/app/modules/shared/services/cliente.service';
+import { NewClienteComponent } from '../new-cliente/new-cliente.component';
 
 @Component({
   selector: 'app-cliente',
@@ -14,8 +15,9 @@ export class ClienteComponent implements OnInit {
   clientes: any;
   nuevoCliente: any;
 
-  constructor(private clienteService: ClienteService,
-    public dialog: MatDialog, private snackBar: MatSnackBar) {}
+  private clienteService = inject(ClienteService);
+  public dialog = inject(MatDialog);
+  private snackBar = inject(MatSnackBar);
 
   ngOnInit(): void {
     this.obtenerClientes();
@@ -37,14 +39,35 @@ export class ClienteComponent implements OnInit {
 
   crearCliente(): void {
     this.clienteService.crearCliente(this.nuevoCliente).subscribe((cliente) => {
-      this.clientes.push(cliente); // Agregar el nuevo cliente a la lista
-      this.nuevoCliente = { nombre: '', direccion: '', contacto: '', informacionAdicional: '' }; // Limpiar el formulario
+      this.clientes.push(cliente);
     });
   }
 
-  processClienteResponse(dataEmpleado: any[]){
-    this.dataSource = new MatTableDataSource<ClienteElement>(dataEmpleado);
+  processClienteResponse(data: any[]){
+    this.dataSource = new MatTableDataSource<ClienteElement>(data);
     this.dataSource.paginator = this.paginator;
+  }
+
+  openClienteDialog(){
+    const dialogRef = this.dialog.open(NewClienteComponent , {
+      width: '450px'
+    });
+
+    dialogRef.afterClosed().subscribe((result:any) => {
+
+      if( result == 1){
+        this.openSnackBar("Cliente agregado", "Exitosamente");
+        this.obtenerClientes();
+      } else if (result == 2) {
+        this.openSnackBar("Se produjo un error al guardar el cliente", "Error");
+      }
+    });
+  }
+
+  openSnackBar(message: string, action: string) : MatSnackBarRef<SimpleSnackBar>{
+    return this.snackBar.open(message, action, {
+      duration: 2000
+    })
   }
 
 }

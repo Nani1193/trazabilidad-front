@@ -21,4 +21,9 @@ export class ClienteService {
     const endpoint = `${base_url}`;
     return this.http.get(`${endpoint}`);
   }
+
+  public saveCliente (data:any): Observable<any>{
+    const endpoint = `${base_url}`;
+    return this.http.post(`${endpoint}/CrearCliente`, data);
+  }
 }
