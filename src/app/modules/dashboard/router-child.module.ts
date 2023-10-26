@@ -5,6 +5,7 @@ import { ClienteComponent } from '../cliente/components/cliente/cliente.componen
 import { ProductosComponent } from '../productos/components/productos/productos.component';
 import { EntregasComponent } from '../entregas/components/entregas/entregas.component';
 import { LineaPedidoComponent } from '../lineaPedido/components/linea-pedido/linea-pedido.component';
+import { PedidosComponent } from '../pedidos/components/pedidos/pedidos.component';
 
 const childRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -17,7 +18,8 @@ const childRoutes: Routes = [
   { path: 'entregas', component: EntregasComponent },
   { path: '', component: LineaPedidoComponent },
   { path: 'lineaPedido', component: LineaPedidoComponent },
-
+  { path: '', component: PedidosComponent },
+  { path: 'pedidos', component: PedidosComponent },
 ]
 
 @NgModule({

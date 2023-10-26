@@ -8,6 +8,7 @@ import { ClienteModule } from '../cliente/cliente.module';
 import { ProductosModule } from '../productos/productos.module';
 import { EntregasModule } from '../entregas/entregas.module';
 import { LineaPedidoModule } from '../lineaPedido/linea-pedido.module';
+import { PedidosModule } from '../pedidos/pedidos.module';
 
 
 
@@ -23,7 +24,9 @@ import { LineaPedidoModule } from '../lineaPedido/linea-pedido.module';
     ClienteModule,
     ProductosModule,
     EntregasModule,
-    LineaPedidoModule
+    LineaPedidoModule,
+    PedidosModule
+
   ]
 })
 export class DashboardModule { }
