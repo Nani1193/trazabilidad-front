@@ -7,6 +7,7 @@ import { SharedModule } from '../shared/shared.module';
 import { ClienteModule } from '../cliente/cliente.module';
 import { ProductosModule } from '../productos/productos.module';
 import { EntregasModule } from '../entregas/entregas.module';
+import { LineaPedidoModule } from '../lineaPedido/linea-pedido.module';
 
 
 
@@ -21,7 +22,8 @@ import { EntregasModule } from '../entregas/entregas.module';
     SharedModule,
     ClienteModule,
     ProductosModule,
-    EntregasModule
+    EntregasModule,
+    LineaPedidoModule
   ]
 })
 export class DashboardModule { }
